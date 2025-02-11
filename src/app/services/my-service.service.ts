@@ -14,7 +14,7 @@ export class MyServiceService {
     return "This is returned from my-service. How are u?"
   }
 
-  getPostById(postId:any) : Observable<any>{
+  getPostById(postId:number) : Observable<any>{
    const url=`https://jsonplaceholder.typicode.com/posts/${postId}`;
    return this.http.get(url);
   }
