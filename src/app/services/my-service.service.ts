@@ -8,14 +8,21 @@ import { Observable } from 'rxjs';
 })
 export class MyServiceService {
 
+  private url="https://jsonplaceholder.typicode.com/posts";
+
   constructor(private http: HttpClient) { }
 
   getGreeting(){
     return "This is returned from my-service. How are u?"
   }
 
+
+   getPosts(): Observable<any>{
+      return this.http.get(this.url);
+   }
+
+
   getPostById(postId:number) : Observable<any>{
-   const url=`https://jsonplaceholder.typicode.com/posts/${postId}`;
-   return this.http.get(url);
+    return this.http.get(`${this.url}/${postId}`);
   }
 }

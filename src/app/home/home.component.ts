@@ -1,26 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,inject, OnInit } from '@angular/core';
 import { MyServiceService } from '../services/my-service.service';
 import { NgIf } from '@angular/common';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
 
   standalone: true,
-  imports:[NgIf],
+  imports:[NgIf,CommonModule],
   template: `
     <p>
       THIS IS THE HOME PAGE .WELCOME !
     </p>
 
-    <button (click)="fetchPost(2)">GetPost of ID=2</button>
+    <button (click)="fetchPosts()">GetPosts</button>
 
-    <h2>Fetched Post:</h2>
+    <ul *ngIf="posts.length > 0">
+      <li *ngFor="let post of posts">
+        <h1>{{post.title}}</h1>
+          <p>{{post.body}}</p>
+        </li>
+    </ul>
+
     <div *ngIf="post">
+      <h2>Post ID: {{ post.id }}</h2>
       <h3>{{ post.title }}</h3>
       <p>{{ post.body }}</p>
     </div>
-    <p *ngIf="loading">Loading ..........</p>
+
+    <div *ngIf="!post">
+      <h2>No Post Selected in url</h2>
+      <p>Enter an ID in the URL to fetch a post.</p>
+    </div>
 
     <p></p>
   `,
@@ -32,24 +45,41 @@ import { Router } from '@angular/router';
       font-style :italic;
       font-weight: bold;
   }
+  button{
+    cursor:pointer;
+    background-color: blue;
+    color: red;
+  }
   `
 })
 export class HomeComponent implements OnInit{
-
-  post:any;
+ private route= inject(ActivatedRoute);
+  posts:any[]=[];
+  post: any =null;
  loading=true;
 
-  constructor(private router:Router, private myService: MyServiceService){
+  constructor( private myService: MyServiceService){
 
   }
   ngOnInit(): void {
-
+    this.route.paramMap.subscribe((params)=>{
+      const postId= params.get('id');
+      if(postId){
+        this.fetchPostsById(+postId);
+      }
+    })
   }
 
-fetchPost(postId:number){
+  fetchPosts(){
+    this.myService.getPosts().subscribe(response=>{this.posts=response});
+  }
+  fetchPostsById(postId:number){
+     this.myService.getPostById(postId).subscribe(response=>this.post=response);
+  }
+/*fetchPostById(postId:number){
 
  this.myService.getPostById(postId).subscribe((response)=>{this.post=response; this.loading=false;}, (error)=>{console.error('There was an error while fetching post data!', error);})
-}
+}*/
 
 
 
