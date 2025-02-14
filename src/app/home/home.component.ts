@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
     <ul *ngIf="posts.length > 0">
       <li *ngFor="let post of posts">
-        <h1>{{post.title}}</h1>
+        <h1>{{post.title | uppercase}}</h1>
           <p>{{post.body}}</p>
         </li>
     </ul>
