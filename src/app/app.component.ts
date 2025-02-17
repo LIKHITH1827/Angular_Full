@@ -10,7 +10,12 @@ import { MyServiceService } from './services/my-service.service';
   template: `
     <h1>Welcome to {{title}}!</h1>
     <!-- Passing userList to UserComponent -->
-    <app-user [users]="userList" (userClicked)="handleUserClick($event)"></app-user>
+    <app-user [users]="userList" (userClicked)="handleUserClick($event)">
+   <p  myattri #projectedContent>This is <strong>projected </strong>from parent</p>
+
+  </app-user>
+
+    <button (click)="userListChange()">onchanges</button>
 
     <nav>
       <a routerLink="/home">Home</a>
@@ -83,14 +88,14 @@ nav a {
 export class AppComponent {
   title = 'appcomponent';
   messagefromservice:string='';
-  userList:string[]=[];
+  userList:string[]=['Likhith','Manoghna','Jay','kittu'];
   selecteduser:string='';
   constructor(private myserviceService: MyServiceService){
 
   }
   ngOnInit():void{
     this.messagefromservice=this.myserviceService.getGreeting();
-    this.userList=['Likhith','Manoghna','Jay','kittu'];
+
   }
 
   toggleflag=false;
@@ -103,4 +108,8 @@ export class AppComponent {
    this.selecteduser=user;
   }
 
+
+  userListChange():void{
+    this.userList= ['python','java'];
+  }
 }

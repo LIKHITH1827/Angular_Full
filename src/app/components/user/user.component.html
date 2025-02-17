@@ -2,3 +2,5 @@
 <ul id="all-users">
   <li *ngFor="let user of users" (click)="onUserClick(user)">{{user}}</li>
 </ul>
+
+<ng-content>select="[myattri]"</ng-content>
