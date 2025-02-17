@@ -10,10 +10,14 @@ import { MyServiceService } from './services/my-service.service';
   template: `
     <h1>Welcome to {{title}}!</h1>
     <!-- Passing userList to UserComponent -->
+    <div class="divider1"></div>
+
     <app-user [users]="userList" (userClicked)="handleUserClick($event)">
    <p  myattri #projectedContent>This is <strong>projected </strong>from parent</p>
 
   </app-user>
+
+  <div class="divider1"></div>
 
     <button (click)="userListChange()">onchanges</button>
 
@@ -27,6 +31,8 @@ import { MyServiceService } from './services/my-service.service';
     <p> the selected user from child is <span id="userselected">{{selecteduser}}</span></p>
     <button (click)="ToggleText()">Submit</button>
     <p *ngIf="toggleflag" id="toggle-text"> Here is toggled text </p>
+
+    <div class="divider"></div>
 
 
 <router-outlet></router-outlet>
@@ -74,13 +80,23 @@ import { MyServiceService } from './services/my-service.service';
       font-size: 35px;
       color: DodgerBlue;
       text-decoration : underline;
-  display: flex;
-  gap: 10px; /* Adds space between the anchor tags */
+      display: flex;
+      gap: 10px; /* Adds space between the anchor tags */
 }
 
 nav a {
   text-decoration: none;
 }
+.divider1 {
+    border-top: 1px solid #333; /* Line thickness & color */
+    width: 100%; /* Full width */
+    margin: 40px 0; /* Space above and below */
+  }
+.divider {
+    border-top: 10px solid #333; /* Line thickness & color */
+    width: 100%; /* Full width */
+    margin: 40px 0; /* Space above and below */
+  }
 
     `
   ],
